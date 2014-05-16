@@ -1,0 +1,25 @@
+includepath source
+
+files
+{
+	(source)
+	"*.cpp"
+	"*.h"
+	
+	(doc)
+	timelinefx.defines.txt
+}
+
+options 
+{ 
+	arm-cpu=6
+	arm-fpu=vfp
+	optimise-speed
+	enable-exceptions			# because of pugixml
+    cflags="-std=gnu++0x"
+}
+
+subprojects
+{
+	pugixml
+}

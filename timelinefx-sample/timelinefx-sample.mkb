@@ -1,0 +1,35 @@
+files
+{
+	[source]
+	(source)
+	"*.cpp"
+	"*.h"
+}
+
+includepaths 
+{
+	source
+}
+
+options 
+{ 
+	arm-cpu=6
+	arm-fpu=vfp
+	optimise-speed
+	enable-exceptions
+	#module_path="$MARMALADE_ROOT/examples;../libs"
+    cflags="-std=gnu++0x"
+}
+
+subprojects
+{
+	iwgx
+	timelinefx
+	#timelinefx/timelinefx-source
+}
+
+assets
+{
+	(data) 
+	"."
+}

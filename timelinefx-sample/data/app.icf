@@ -1,0 +1,17 @@
+[S3E]  
+SplashscreenBkR=0
+SplashscreenBkG=0
+SplashscreenBkB=0
+
+MemSize=30000000
+MemSizeDebug=500000000
+
+SysAppNeverSleep=0
+
+SysGlesVersion=2
+SysStackSwitchFastDisable=1
+
+[GX]
+NumTPages=400
+DataCacheSize=1000000
+VertCacheSize=200000

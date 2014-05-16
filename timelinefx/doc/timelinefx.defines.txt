@@ -1,0 +1,1 @@
+TIMELINEFX_AVAILABLE	Is timelinefx available to use?

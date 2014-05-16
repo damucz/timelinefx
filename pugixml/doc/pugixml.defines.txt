@@ -1,0 +1,1 @@
+PUGIXML_AVAILABLE	Is pugixml available to use?

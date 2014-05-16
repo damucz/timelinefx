@@ -13,6 +13,7 @@ Check the youtube video for every package.
 The library is based on the official TimelineFX's BlitzMax sources.
 The system should support both fixed and variable timestep with optional tweening between states in Draw,
 although I didn't test it yet.
+
 I didn't want to bring additional dependency, so the official .eff file should be unzipped before use
 and the sprite paths in data.xml (in the end usually) manually corrected. Sorry for this. Looks more
 convenient to me than implementing libzip and loading images from memory stream.
@@ -20,39 +21,41 @@ convenient to me than implementing libzip and loading images from memory stream.
 Basic usage is described here http://www.rigzsoft.co.uk/basic-usage-of-timelinefx-for-blitzmax/.
 
 Usage
-=====
+-----
 
-1) Common C++
-a) Take the source from timelinefx/source
-b) Take the PugiXML from official website or here from pugixml. OR inherit XMLLoader and implement your own xml loader.
-c) Inherit AnimImage to load and keep the sprites.
-d) Inherit MarmaladeParticleManager for drawing the images (the particle system is calling DrawSprite with correct parameters).
-e) Inherit EffectsLibrary and implement two Create methods with correct classes (this is a factory).
+1. Common C++
+   a. Take the source from timelinefx/source
+   b. Take the PugiXML from official website or here from pugixml. OR inherit XMLLoader and implement your own xml loader.
+   c. Inherit AnimImage to load and keep the sprites.
+   d. Inherit MarmaladeParticleManager for drawing the images (the particle system is calling DrawSprite with correct parameters).
+   e. Inherit EffectsLibrary and implement two Create methods with correct classes (this is a factory).
 
-Check out timelinefx-sample/source/MarmaladeEffectsLibrary.h+cpp for sample.
+   Check out timelinefx-sample/source/MarmaladeEffectsLibrary.h+cpp for sample.
 
-2) Marmalade
-a) Checkout three projects - pugixml, timelinefx and timelinefx-sample
-b) Open timelinefx-sample.mkb
-c) Run
+2. Marmalade
+   a. Checkout three projects - pugixml, timelinefx and timelinefx-sample
+   b. Open timelinefx-sample.mkb
+   c. Run
 
-You can use timelinefx subproject directly in your game/app. Simply implement the classes like in 1) Common C++.
+You can use timelinefx subproject directly in your game/app. Simply implement the classes like in 1. Common C++.
+
 timelinefx subproject can be used as precompiled and linked static libraries (timelinefx.mkf and .mkb) or the sources (timelinefx-source.mkf)
 
 Technical
-=========
+---------
 
 There are three parts which can be implemented by you by simple inheriting the specific
 classes and defining your own behaviour:
-1) XMLLoader - right now, PugiXMLLoader (dependency) is implemented and used, but you can reimplement it by your XML parser
-2) AnimImage - you should inherit this to keep image data for your system/engine
-3) ParticleManager::DrawSprite - inherit this to take your AnimImage and send/queue it to your rendering system
+
+1. XMLLoader - right now, PugiXMLLoader (dependency) is implemented and used, but you can reimplement it by your XML parser
+2. AnimImage - you should inherit this to keep image data for your system/engine
+3. ParticleManager::DrawSprite - inherit this to take your AnimImage and send/queue it to your rendering system
 
 Except of PugiXML, I implemented Marmalade sample for 2) and 3). There is a sample project showing
 how to use it. DrawSprite is implemented with basic batching.
 
 Bugs / todo
-===========
+-----------
 
 There are still some minor issues I know about, especially when using subeffects, but don't hesitate to report or fix.
 

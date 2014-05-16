@@ -1,0 +1,20 @@
+includepath source
+
+library
+{
+	".,timelinefx"
+}
+
+files
+{
+	(source)
+	"*.h"
+	
+	(doc)
+	timelinefx.defines.txt
+}
+
+subprojects
+{
+	pugixml
+}

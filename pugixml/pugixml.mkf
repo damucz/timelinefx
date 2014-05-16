@@ -1,0 +1,30 @@
+defines
+{
+	PUGIXML_AVAILABLE
+}
+
+includepaths
+{
+	"src"
+	"include"
+}
+
+options 
+{ 
+	arm-cpu=6
+	arm-fpu=vfp
+	optimise-speed
+}
+
+files
+{
+	[]
+	("include")
+	"*.hpp"
+  
+	("src")
+	"*.cpp"
+	
+	(doc)
+	pugixml.defines.txt
+}
