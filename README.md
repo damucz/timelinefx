@@ -14,7 +14,12 @@ The library is based on the official TimelineFX's *BlitzMax sources*.
 
 The system should support both fixed and variable timestep with optional tweening between states in Draw, although I didn't test it yet.
 
-I didn't want to bring additional dependency, so the official .eff file should be unzipped before use and the sprite paths in data.xml (in the end usually) manually corrected. Sorry for this. Looks more convenient to me than implementing libzip and loading images from memory stream.
+I didn't want to bring additional dependency, so zou have to options:
+
+1. Unzip the official .eff file before use and edit the sprite paths in data.xml (in the end usually) manually.
+2. File->Export .zip from TimelineFX editor, unzip it and you are ready to go.
+
+Sorry for this. Looks more convenient to me than implementing libzip and loading images from memory stream.
 
 [Basic usage is described here](http://www.rigzsoft.co.uk/basic-usage-of-timelinefx-for-blitzmax/).
 

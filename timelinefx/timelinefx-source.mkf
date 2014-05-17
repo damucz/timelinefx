@@ -1,5 +1,7 @@
 includepath source
 
+define TIMELINEFX_AVAILABLE
+
 files
 {
 	(source)
