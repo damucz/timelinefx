@@ -126,7 +126,9 @@ namespace TLFX
             path = parent->GetPath();
         else
             path = folderPath;
-        path = path + "/" + e->GetName();
+        if (!path.empty())
+            path += "/";
+        path += e->GetName();
         e->SetPath(path.c_str());
 
         pugi::xml_node animation = node.child("ANIMATION_PROPERTIES");
