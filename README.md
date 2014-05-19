@@ -124,6 +124,6 @@ how to use it. DrawSprite is implemented with basic batching.
 Bugs / todo
 -----------
 
-There are still some minor issues I know about, especially when using subeffects, but don't hesitate to report or fix.
+There are still some minor issues I know about, but don't hesitate to report or fix.
 
 dan@ger.cz
