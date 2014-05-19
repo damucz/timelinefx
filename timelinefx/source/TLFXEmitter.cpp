@@ -841,7 +841,7 @@ namespace TLFX
         }
         else
         {
-            if (_children.size() > 0)
+            if (_children.empty())
             {
                 Destroy();
                 delete this;
