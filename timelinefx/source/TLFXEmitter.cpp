@@ -1700,9 +1700,9 @@ namespace TLFX
                 }
 
                 if (_uniform)
-                    e->_scaleY = (GetEmitterScaleX(e->_age, (float)e->_lifeTime) * e->_gSizeX * (e->_width + (Vector2::GetDistance(0, 0, e->_speedVec.x, e->_speedVec.y) * GetEmitterStretch(e->_age, (float)e->_lifeTime) * _parentEffect->GetCurrentStretch()))) / _image->GetWidth();
+                    e->_scaleY = (GetEmitterScaleX(e->_age, (float)e->_lifeTime) * e->_gSizeX * (e->_width + (fabsf(e->_speed) * GetEmitterStretch(e->_age, (float)e->_lifeTime) * _parentEffect->GetCurrentStretch()))) / _image->GetWidth();
                 else
-                    e->_scaleY = (GetEmitterScaleY(e->_age, (float)e->_lifeTime) * e->_gSizeY * (e->_height + (Vector2::GetDistance(0, 0, e->_speedVec.x, e->_speedVec.y) * GetEmitterStretch(e->_age, (float)e->_lifeTime) * _parentEffect->GetCurrentStretch()))) / _image->GetHeight();
+                    e->_scaleY = (GetEmitterScaleY(e->_age, (float)e->_lifeTime) * e->_gSizeY * (e->_height + (fabsf(e->_speed) * GetEmitterStretch(e->_age, (float)e->_lifeTime) * _parentEffect->GetCurrentStretch()))) / _image->GetHeight();
             }
             else
             {

@@ -124,6 +124,7 @@ how to use it. DrawSprite is implemented with basic batching.
 Bugs / todo
 -----------
 
-There are still some minor issues I know about, but don't hesitate to report or fix.
+All the effects should look like in the editor now.
+Don't hesitate to report any bug or fix. :)
 
 dan@ger.cz
