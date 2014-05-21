@@ -107,7 +107,7 @@ bool EffectsLibrary::Load( const char *filename, bool compile /*= true*/ )
         AnimImage *shape;
         while ((shape = CreateImage()), loader->GetNextShape(shape))
         {
-            assert(AddSprite(shape));
+            AddSprite(shape);
         }
         delete shape;               // last even shape is safe to delete
 
