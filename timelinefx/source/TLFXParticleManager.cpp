@@ -123,8 +123,9 @@ namespace TLFX
                 {
                     if (!(*it)->Update())
                     {
-                        RemoveEffect(*it);
-                        delete *it;
+                        //RemoveEffect(*it);
+                        auto x = *it;
+                        delete x;
                         _effects[el].erase(it++);
                     }
                     else

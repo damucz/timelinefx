@@ -1038,7 +1038,6 @@ namespace TLFX
              if (GetChildCount() == 0)
              {
                  Destroy();
-                 delete this;
                  return false;
              }
              else

@@ -281,7 +281,7 @@ namespace TLFX
         e->SetAnimationDirection(node.attribute("ANIMATION_DIRECTION").as_int());
         e->SetUniform           (node.attribute("UNIFORM").as_bool());
         e->SetAngleType         (node.attribute("ANGLE_TYPE").as_int());
-        e->SetAngleOffset       (node.attribute("ANGLE_OFFSET").as_bool());
+        e->SetAngleOffset       (node.attribute("ANGLE_OFFSET").as_int());
         e->SetLockAngle         (node.attribute("LOCK_ANGLE").as_bool());
         e->SetAngleRelative     (node.attribute("ANGLE_RELATIVE").as_bool());
         e->SetUseEffectEmission (node.attribute("USE_EFFECT_EMISSION").as_bool());

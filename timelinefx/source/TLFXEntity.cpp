@@ -90,6 +90,8 @@ namespace TLFX
         , _parent(NULL)
         , _rootParent(NULL)
 
+        , _childrenOwner(true)
+
         , _blendMode(BMAlphaBlend)
 
         , _alpha(1.0f)
@@ -202,6 +204,8 @@ namespace TLFX
 
         , _parent(NULL)
         , _rootParent(NULL)
+
+        , _childrenOwner(o._childrenOwner)
 
         , _blendMode(o._blendMode)
 
@@ -390,7 +394,10 @@ namespace TLFX
         for (auto it = _children.begin(); it != _children.end(); )
         {
             if (!(*it)->Update())
+            {
+                if (_childrenOwner) delete *it;
                 it = _children.erase(it);
+            }
             else
                 ++it;
         }
@@ -571,7 +578,7 @@ namespace TLFX
         for (auto it = _children.begin(); it != _children.end(); ++it)
         {
             (*it)->Destroy(releaseChildren);
-            if (releaseChildren) delete *it;
+            if (releaseChildren && _childrenOwner) delete *it;
         }
         _children.clear();
         _destroyed = true;
@@ -588,7 +595,7 @@ namespace TLFX
         for (auto it = _children.begin(); it != _children.end(); ++it)
         {
             (*it)->Destroy();
-            delete *it;
+            if (_childrenOwner) delete *it;
         }
         _children.clear();
     }

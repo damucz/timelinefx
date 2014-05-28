@@ -713,6 +713,7 @@ namespace TLFX
         Entity*                         _rootParent;                // The root parent of the entity
         // children
         std::list<Entity*>              _children;                  // list of child entities
+        bool                            _childrenOwner;             // true if this parent is responsible for disposing their children
         BlendMode                       _blendMode;                 // blend mode of the entity
         // alpha settings
         float                           _alpha;                     // current alpha level of the entity

@@ -86,6 +86,8 @@ namespace TLFX
 
         , _arrayOwner(true)
     {
+        _childrenOwner = false;         // the Particles are managing by pool
+
         _cAmount = new EmitterArray(EffectsLibrary::amountMin, EffectsLibrary::amountMax);
         _cLife = new EmitterArray(EffectsLibrary::lifeMin, EffectsLibrary::lifeMax);
         _cSizeX = new EmitterArray(EffectsLibrary::dimensionsMin, EffectsLibrary::dimensionsMax);
@@ -844,7 +846,6 @@ namespace TLFX
             if (_children.empty())
             {
                 Destroy();
-                delete this;
                 return false;
             }
             else
