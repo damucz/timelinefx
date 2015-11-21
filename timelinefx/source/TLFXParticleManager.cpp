@@ -531,19 +531,17 @@ namespace TLFX
 
                     float rotation;
 
-                    _tv = TweenValues(p->GetOldAngle(), p->GetAngle(), _currentTween);
-                    if (p->GetEmitter()->IsAngleRelative())
+					if (p->GetEmitter()->IsAngleRelative())
                     {
                         if (fabsf(p->GetOldRelativeAngle() - p->GetRelativeAngle()) > 180)
-                            _tx = TweenValues(p->GetOldRelativeAngle() - 360, p->GetRelativeAngle(), _currentTween);
+                            _tv = TweenValues(p->GetOldRelativeAngle() - 360, p->GetRelativeAngle(), _currentTween);
                         else
-                            _tx = TweenValues(p->GetOldRelativeAngle(), p->GetRelativeAngle(), _currentTween);
-                        //SetRotation(_tv + _tx + _angleTweened);
-                        rotation = _tv + _tx + _angleTweened;
+                            _tv = TweenValues(p->GetOldRelativeAngle(), p->GetRelativeAngle(), _currentTween);
+						rotation = _tv + _angleTweened;
                     }
                     else
-                    {
-                        //SetRotation(_tv + _angleTweened);
+					{
+						_tv = TweenValues(p->GetOldAngle(), p->GetAngle(), _currentTween);
                         rotation = _tv + _angleTweened;
                     }
 
@@ -592,6 +590,7 @@ namespace TLFX
                     {
                         _tv = p->GetCurrentFrame();
                     }
+					
                     DrawSprite(sprite, _px, _py, _tv, x, y, rotation, scaleX, scaleY, r, g, b, a, blend == Emitter::BMLightBlend);
                     // ++rendercount
                 }
