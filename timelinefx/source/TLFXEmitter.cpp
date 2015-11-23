@@ -946,6 +946,9 @@ namespace TLFX
                     ++EffectsLibrary::particlesCreated;
 #endif
                     // -----Link to its emitter and assign the control source (which is this emitter)----
+					std::string particleName = "(particle)";
+					particleName.append(GetName());
+					e->SetName(particleName.c_str());
                     e->SetEmitter(this);
                     e->SetParent(this);
                     e->SetParticleManager(pm);

@@ -335,6 +335,43 @@ namespace TLFX
     {
         return (int)_unused.size();
     }
+	
+	int ParticleManager::GetEffectCount()
+	{
+		int effectCount = 0;
+		for (int el = 0; el < _effectLayers; ++el)
+		{
+			effectCount += _effects[el].size();
+		}
+		return effectCount;
+	}
+	
+	std::string ParticleManager::GetEffectNames()
+	{
+		
+		/*
+		 if last outer loop and last inner loop
+		 	no comma
+		 
+		 if not last outer loop or not last inner loop
+		 */
+		std::string effectNames("[ ");
+		for(int i = 0; i < _effects.size(); ++i)
+		{
+			//effects += manager->_effects[i].size();
+			for(auto it = _effects[i].begin(), end = _effects[i].end(); it != end; ++it)
+			{
+				effectNames.append((*it)->GetName());
+				if(i < _effects.size() - 1 || std::distance(it, end) > 1)
+					effectNames.append(", ");
+			}
+			if(i == _effects.size() - 1)
+				effectNames.append(" ]");
+			else
+				effectNames.append(", ");
+		}
+		return effectNames;
+	}
 
     void ParticleManager::AddPreLoadedEffect( Effect* e, int frames, int layer /*= 0*/ )
     {
