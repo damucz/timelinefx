@@ -7,11 +7,16 @@
 
 #include "TLFXEntity.h"
 
+#include <list>
+
 namespace TLFX
 {
 
     class Emitter;
     class ParticleManager;
+	class Particle;
+	
+	typedef std::list<Particle*> ParticleList;
 
     /**
      * Particle Type - extends tlEntity
@@ -94,6 +99,9 @@ namespace TLFX
 
         void SetWeightVariation(float weightVar);
         float GetWeightVariation() const;
+		
+		void SetIter(ParticleList::iterator iter);
+		ParticleList::iterator GetIter() const;
 
     protected:
         Emitter*                    _emitter;                       // emitter it belongs to
@@ -119,6 +127,8 @@ namespace TLFX
         int                         _layer;                         // layer the particle belongs to
         bool                        _groupParticles;                // whether the particle is added the PM pool or kept in the emitter's pool
         int                         _effectLayer;
+		
+		ParticleList::iterator      _listIter;                      // for quick deletes from ParticleList
     };
 
 } // namespace TLFX

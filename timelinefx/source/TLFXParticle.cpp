@@ -30,6 +30,7 @@ namespace TLFX
         , _layer(0)
         , _groupParticles(false)
         , _effectLayer(0)
+		// can't initialize _listIter without knowing what list this particle will be put into
     {
 
     }
@@ -108,6 +109,7 @@ namespace TLFX
         _gravity = 0;
         _weight = 0;
         _emitter = NULL;
+		// let _listIter stay an invalid iterator
     }
 
     void Particle::Destroy(bool releaseChildren)
@@ -283,5 +285,15 @@ namespace TLFX
     {
         return _weightVariation;
     }
+	
+	void Particle::SetIter(ParticleList::iterator iter)
+	{
+		_listIter = iter;
+	}
+	
+	ParticleList::iterator Particle::GetIter() const
+	{
+		return _listIter;
+	}
 
 } // namespace TLFX

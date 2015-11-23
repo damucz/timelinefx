@@ -66,7 +66,7 @@
 #include <string>
 #include <map>
 #include <vector>
-#include <set>
+#include <list>
 
 namespace TLFX
 {
@@ -74,6 +74,8 @@ namespace TLFX
     class Particle;
     class ParticleManager;
     class Shape;
+	
+	typedef std::list<Particle*> ParticleList;
 
     class Effect : public Entity
     {
@@ -856,7 +858,7 @@ namespace TLFX
         void SetCurrentEffectFrame(float frame);
         float GetCurrentEffectFrame() const;
 
-        const std::set<Particle*>& GetParticles(int layer) const;
+        const ParticleList& GetParticles(int layer) const;
 
         bool IsDying() const;
 
@@ -892,7 +894,7 @@ namespace TLFX
         bool                           _allowSpawning;          /// Set to false to disable emitters from spawning any new particles
         float                          _ellipseArc;             /// With ellipse effects this sets the degrees of which particles emit around the edge
         int                            _ellipseOffset;          /// This is the offset needed to make arc center at the top of the circle.
-        std::vector<std::set<Particle*> > _inUse;               /// This stores particles created by the effect, for drawing purposes only.
+        std::vector<ParticleList>      _inUse;                  /// This stores particles created by the effect, for drawing purposes only.
         int                            _effectLayer;            /// The layer that the effect resides on in its particle manager
         bool                           _doesNotTimeout;         /// Whether the effect never timeouts automatically
 

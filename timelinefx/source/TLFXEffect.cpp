@@ -1284,16 +1284,15 @@ namespace TLFX
 
         // the particle is managed by this Effect
         SetGroupParticles(true);
-        _inUse[layer].insert(p);
+		_inUse[layer].push_back(p);
+		p->SetIter(--_inUse[layer].end());
     }
 
     void Effect::RemoveInUse( int layer, Particle *p )
-    {
-        auto it = _inUse[layer].find(p);
+	{
+		auto it = p->GetIter();
         assert(layer >= 0 && layer < (int)_inUse.size() && it != _inUse[layer].end());
-
-        if (it != _inUse[layer].end())
-            _inUse[layer].erase(p);
+		_inUse[layer].erase(it);
     }
 
     int Effect::GetEffectLayer() const
@@ -1306,7 +1305,7 @@ namespace TLFX
         _effectLayer = layer;
     }
 
-    const std::set<Particle*>& Effect::GetParticles( int layer ) const
+    const ParticleList& Effect::GetParticles( int layer ) const
     {
         return _inUse[layer];
     }
