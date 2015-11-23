@@ -64,6 +64,10 @@ namespace TLFX
     {
     public:
         static const int   particleLimit;
+		
+		// true: create particles whenever there aren't enough in _unused
+		// false: when _unused is empty, stop creating particles
+		static bool createParticlesAsNeeded;
 
         /**
          * Create a new Particle Manager
