@@ -126,7 +126,7 @@ bool EffectsLibrary::Load( const char *filename, bool compile /*= true*/ )
     }
 
     delete loader;
-    return false;
+    return loaded;
 }
 
 void EffectsLibrary::AddEffect( Effect *e )
