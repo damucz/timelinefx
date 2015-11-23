@@ -157,21 +157,36 @@ namespace TLFX
          * Get the current z origin/zoom factor of the particle manager
          */
         float GetOriginZ() const;
-
-        /**
-         * Get the globalamountscale value of the particle manager
-         * see #SetGlobalAmountScale for info about setting this value
-         */
-        float GetGlobalAmountScale() const;
-
-        /**
-         * Set the globalamountscale value of the particle manager
-         * Setting this value will scale the amount of the particles spawned by all emitters contained within the particle manager, making it a handy way
-         * to control globally, the amount of particles that are spawned. This can help improve performance on lower end hardware that struggle to draw
-         * lots of particles. A value of 1 (the default value) will spawn the default amount for each effect. A value of 0.5 though for example, will spawn
-         * half the amount of particles of each effect.
-         */
-        void SetGlobalAmountScale(float scale);
+		
+		/**
+		 * Get the localamountscale value of the particle manager
+		 * see #SetLocalAmountScale for info about setting this value
+		 */
+		float GetLocalAmountScale() const;
+		
+		/**
+		 * Set the localamountscale value of the particle manager
+		 * Setting this value will scale the amount of the particles spawned by all emitters contained within the particle manager, making it a handy way
+		 * to control globally, the amount of particles that are spawned. This can help improve performance on lower end hardware that struggle to draw
+		 * lots of particles. A value of 1 (the default value) will spawn the default amount for each effect. A value of 0.5 though for example, will spawn
+		 * half the amount of particles of each effect.
+		 */
+		void SetLocalAmountScale(float scale);
+		
+		/**
+		 * Get the globalamountscale value of all particle managers
+		 * see #SetGlobalAmountScale for info about setting this value
+		 */
+		static float GetGlobalAmountScale();
+		
+		/**
+		 * Set the globalamountscale value of the particle manager
+		 * Setting this value will scale the amount of the particles spawned by all emitters contained within all particle managers, making it a handy way
+		 * to control globally, the amount of particles that are spawned. This can help improve performance on lower end hardware that struggle to draw
+		 * lots of particles. A value of 1 (the default value) will spawn the default amount for each effect. A value of 0.5 though for example, will spawn
+		 * half the amount of particles of each effect.
+		 */
+		static void SetGlobalAmountScale(float scale);
 
         /**
          * Get the current number of particles in use
@@ -275,8 +290,9 @@ namespace TLFX
 
         float                                _tv, _tx, _ty, _tz, _px, _py;
         float                                _angleTweened;
-
-        float                                _globalAmountScale;
+		
+		float                                _localAmountScale; // only effects managed by this
+		static float                         _globalAmountScale; // all managers
 
         float                                _camtx, _camty, _camtz;
 

@@ -865,7 +865,7 @@ namespace TLFX
         float curFrame = _parentEffect->GetCurrentEffectFrame();
         ParticleManager* pm = _parentEffect->GetParticleManager();
 
-        qty = ((GetEmitterAmount(curFrame) + Rnd(GetEmitterAmountVariation(curFrame))) * _parentEffect->GetCurrentAmount() * pm->GetGlobalAmountScale()) / EffectsLibrary::GetUpdateFrequency();
+        qty = ((GetEmitterAmount(curFrame) + Rnd(GetEmitterAmountVariation(curFrame))) * _parentEffect->GetCurrentAmount() * pm->GetGlobalAmountScale() * pm->GetLocalAmountScale()) / EffectsLibrary::GetUpdateFrequency();
         if (!_singleParticle)
             _counter += qty;
         intCounter = (int)_counter;
