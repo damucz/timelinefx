@@ -102,7 +102,7 @@ bool EffectsLibrary::Load( const char *filename, bool compile /*= true*/ )
 {
     XMLLoader *loader = CreateLoader();
     bool loaded;
-    if (loaded = loader->Open(filename))
+    if ((loaded = loader->Open(filename)))
     {
         AnimImage *shape;
         while ((shape = CreateImage()), loader->GetNextShape(shape))
@@ -112,7 +112,7 @@ bool EffectsLibrary::Load( const char *filename, bool compile /*= true*/ )
         delete shape;               // last even shape is safe to delete
 
         Effect *effect;
-        while (effect = loader->GetNextEffect(_shapeList))
+        while ((effect = loader->GetNextEffect(_shapeList)))
         {
             if (compile)
                 effect->CompileAll();
