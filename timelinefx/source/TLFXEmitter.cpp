@@ -1136,7 +1136,7 @@ namespace TLFX
 
                                 if (_parentEffect->GetMGX() > 1)
                                 {
-                                    e->SetX((_gx / (_parentEffect->GetMGX() - 1) * _parentEffect->GetCurrentWidth()) - _parentEffect->GetHandleX());
+                                    e->SetX((_gx / static_cast<float>(_parentEffect->GetMGX() - 1) * _parentEffect->GetCurrentWidth()) - _parentEffect->GetHandleX());
                                 }
                                 else
                                 {
