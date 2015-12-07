@@ -865,7 +865,7 @@ namespace TLFX
         float curFrame = _parentEffect->GetCurrentEffectFrame();
         ParticleManager* pm = _parentEffect->GetParticleManager();
 
-        qty = ((GetEmitterAmount(curFrame) + Rnd(GetEmitterAmountVariation(curFrame))) * _parentEffect->GetCurrentAmount() * pm->GetGlobalAmountScale()) / EffectsLibrary::GetUpdateFrequency();
+        qty = ((GetEmitterAmount(curFrame) + Rnd(GetEmitterAmountVariation(curFrame))) * _parentEffect->GetCurrentAmount() * pm->GetGlobalAmountScale() * pm->GetLocalAmountScale()) / EffectsLibrary::GetUpdateFrequency();
         if (!_singleParticle)
             _counter += qty;
         intCounter = (int)_counter;
@@ -1018,16 +1018,16 @@ namespace TLFX
                                 _gx += _parentEffect->GetSpawnDirection();
                                 if (_gx < 0)
                                 {
-                                    _gx = _parentEffect->GetMGX() - 1;
+                                    _gx = (float)(_parentEffect->GetMGX() - 1);
                                     _gy += _parentEffect->GetSpawnDirection();
                                     if (_gy < 0)
-                                        _gy = _parentEffect->GetMGY() - 1;
+                                        _gy = (float)(_parentEffect->GetMGY() - 1);
                                 }
                             }
 
                             if (_parentEffect->GetMGX() > 1)
                             {
-                                e->SetX(((float)_gx / (_parentEffect->GetMGX() - 1) * _parentEffect->GetCurrentWidth()) - _parentEffect->GetHandleX());
+                                e->SetX((_gx / (_parentEffect->GetMGX() - 1) * _parentEffect->GetCurrentWidth()) - _parentEffect->GetHandleX());
                             }
                             else
                             {
@@ -1036,7 +1036,7 @@ namespace TLFX
 
                             if (_parentEffect->GetMGY() > 1)
                             {
-                                e->SetY(((float)_gy / (_parentEffect->GetMGY() - 1) * _parentEffect->GetCurrentHeight()) - _parentEffect->GetHandleY());
+                                e->SetY((_gy / (_parentEffect->GetMGY() - 1) * _parentEffect->GetCurrentHeight()) - _parentEffect->GetHandleY());
                             }
                             else
                             {
@@ -1096,10 +1096,10 @@ namespace TLFX
                                 }
                                 else if (_gx < 0)
                                 {
-                                    _gx = _parentEffect->GetMGX() - 1;
+                                    _gx = (float)(_parentEffect->GetMGX() - 1);
                                 }
 
-                                th = (float)_gx * (_parentEffect->GetEllipseArc() / _parentEffect->GetMGX()) + _parentEffect->GetEllipseOffset();
+                                th = _gx * (_parentEffect->GetEllipseArc() / _parentEffect->GetMGX()) + _parentEffect->GetEllipseOffset();
                             }
                             else
                             {
@@ -1134,12 +1134,12 @@ namespace TLFX
                                 {
                                     _gx += _parentEffect->GetSpawnDirection();
                                     if (_gx < 0)
-                                        _gx = _parentEffect->GetMGX() - 1;
+                                        _gx = (float)(_parentEffect->GetMGX() - 1);
                                 }
 
                                 if (_parentEffect->GetMGX() > 1)
                                 {
-                                    e->SetX((_gx / static_cast<float>(_parentEffect->GetMGX() - 1) * _parentEffect->GetCurrentWidth()) - _parentEffect->GetHandleX());
+                                    e->SetX((_gx / (_parentEffect->GetMGX() - 1) * _parentEffect->GetCurrentWidth()) - _parentEffect->GetHandleX());
                                 }
                                 else
                                 {
@@ -1175,12 +1175,12 @@ namespace TLFX
                                     {
                                         _gx += _parentEffect->GetSpawnDirection();
                                         if (_gx < 0)
-                                            _gx = _parentEffect->GetMGX() - 1;
+                                            _gx = (float)(_parentEffect->GetMGX() - 1);
                                     }
 
                                     if (_parentEffect->GetMGX() > 1)
                                     {
-                                        e->SetX(((float)_gx / (_parentEffect->GetMGX() - 1) * _parentEffect->GetCurrentWidth()) - _parentEffect->GetHandleX());
+                                        e->SetX((_gx / (_parentEffect->GetMGX() - 1) * _parentEffect->GetCurrentWidth()) - _parentEffect->GetHandleX());
                                     }
                                     else
                                     {

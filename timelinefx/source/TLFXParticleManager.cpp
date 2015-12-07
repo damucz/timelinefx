@@ -12,6 +12,7 @@ namespace TLFX
 {
     const int   ParticleManager::particleLimit = 5000;
 	bool        ParticleManager::createParticlesAsNeeded = true;
+    float       ParticleManager::_globalAmountScale = 1.0f;
 
     ParticleManager::ParticleManager(int particles /*= particleLimit*/, int layers /*= 1*/)
         : _originX(0)
@@ -40,7 +41,7 @@ namespace TLFX
 
         , _angleTweened(0)
 
-        , _globalAmountScale(1.0f)
+        , _localAmountScale(1.0f)
 
         , _camtx(0)
         , _camty(0)
@@ -324,12 +325,22 @@ namespace TLFX
         return _originZ;
     }
 
-    float ParticleManager::GetGlobalAmountScale() const
+    float ParticleManager::GetLocalAmountScale() const
+    {
+        return _localAmountScale;
+    }
+
+    void ParticleManager::SetLocalAmountScale(float scale)
+    {
+        _localAmountScale = scale;
+    }
+
+    float ParticleManager::GetGlobalAmountScale()
     {
         return _globalAmountScale;
     }
 
-    void ParticleManager::SetGlobalAmountScale( float scale )
+    void ParticleManager::SetGlobalAmountScale(float scale)
     {
         _globalAmountScale = scale;
     }
@@ -364,7 +375,7 @@ namespace TLFX
 		 if not last outer loop or not last inner loop
 		 */
 		std::string effectNames("[ ");
-		for(int i = 0; i < _effects.size(); ++i)
+		for(size_t i = 0; i < _effects.size(); ++i)
 		{
 			//effects += manager->_effects[i].size();
 			for(auto it = _effects[i].begin(), end = _effects[i].end(); it != end; ++it)

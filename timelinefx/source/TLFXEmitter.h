@@ -875,7 +875,7 @@ namespace TLFX
         bool                                    _handleCenter;          /// Whether or not the particle's handle is in centered automatically
         int                                     _angleOffset;           /// angle variation and offset
         bool                                    _lockedAngle;           /// entity rotation is locked to the direction it's going
-        int                                     _gx, _gy;               /// Grid Coords from grid spawning in an area
+        float                                   _gx, _gy;               /// Grid Coords from grid spawning in an area
         float                                   _counter;               /// counter for the spawning of particles
         float                                   _oldCounter;            /// old counter value for tweening
         Angle                                   _angleType;             /// Set to either AngAlign to motion, AngRandom or AngSpecify

@@ -7,7 +7,7 @@
 
 TLFX::XMLLoader* MarmaladeEffectsLibrary::CreateLoader() const
 {
-    return new TLFX::PugiXMLLoader();
+    return new TLFX::PugiXMLLoader(0);
 }
 
 TLFX::AnimImage* MarmaladeEffectsLibrary::CreateImage() const

@@ -16,6 +16,8 @@ namespace TLFX
     class PugiXMLLoader : public XMLLoader
     {
     public:
+        PugiXMLLoader(int shapes) : XMLLoader(shapes) {}
+
         virtual bool        Open(const char *filename);
         virtual bool        GetNextShape(AnimImage *shape);
         virtual Effect*     GetNextEffect(const std::list<AnimImage*>& sprites);
