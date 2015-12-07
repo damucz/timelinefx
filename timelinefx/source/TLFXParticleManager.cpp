@@ -152,7 +152,11 @@ namespace TLFX
             if (pool)
                 effect->AddInUse(layer, p);
             else
-                _inUse[effect->GetEffectLayer()][layer].insert(p);
+			{
+				auto& plist = _inUse[effect->GetEffectLayer()][layer];
+				plist.push_back(p);
+				p->SetIter(--plist.end());
+			}
 
             ++_inUseCount;
 
@@ -169,11 +173,7 @@ namespace TLFX
         if (!p->IsGroupParticles())
         {
             auto& plist = _inUse[p->GetEffectLayer()][p->GetLayer()];
-            auto it = plist.find(p);
-            if (it != plist.end())
-            {
-                plist.erase(it);
-            }
+			plist.erase(p->GetIter());
         }
     }
 

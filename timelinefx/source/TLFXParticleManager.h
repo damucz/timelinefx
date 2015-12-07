@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <set>
+#include <list>
 #include <stack>
 
 namespace TLFX
@@ -18,6 +19,8 @@ namespace TLFX
     class Particle;
     class Effect;
     class AnimImage;
+	
+	typedef std::list<Particle*> ParticleList;
 
     /**
      * Particle manager for managing a list of effects and all the emitters and particles they contain
@@ -255,7 +258,7 @@ namespace TLFX
         bool IsSpawningAllowed() const;
 
     protected:
-        std::vector<std::vector<std::set<Particle*> > > _inUse;
+        std::vector<std::vector<ParticleList> > _inUse;
         std::stack<Particle*>                _unused;
         int                                  _inUseCount;                           // the Particle doesn't have to be managed by ParticleManager (seed GrabParticle)
 
