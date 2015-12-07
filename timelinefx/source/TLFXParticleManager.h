@@ -79,7 +79,7 @@ namespace TLFX
          * Update the Particle Manager
          * Run this method in your main loop to update all particle effects.
          */
-        void Update();
+        virtual void Update();
 
         Particle* GrabParticle(Effect *effect, bool pool, int layer = 0);
 
@@ -90,7 +90,7 @@ namespace TLFX
          * Draws all particles in use and uses the tween value you pass to use render tween in order to smooth out the movement of effects assuming you
          * use some kind of tweening code in your app. You can also specify the effect layer that is drawn, otherwise by default, all layers will be drawn.
          */
-        void DrawParticles(float tween = 1.0f, int layer = -1);
+        virtual void DrawParticles(float tween = 1.0f, int layer = -1);
 
         void DrawBoundingBoxes();
 
