@@ -18,13 +18,16 @@ namespace TLFX
     class XMLLoader
     {
     public:
-        virtual ~XMLLoader() {}
+		XMLLoader(int shapes) : _existingShapeCount(shapes) {}
+		virtual ~XMLLoader() {}
 
         virtual bool        Open(const char *filename) = 0;
         virtual bool        GetNextShape(AnimImage *shape) = 0;
         virtual Effect*     GetNextEffect(const std::list<AnimImage*>& sprites) = 0;
 
         virtual const char* GetLastError() const { return "no error reporting implemented"; }
+		
+		int _existingShapeCount;
     };
 
 } // namespace TLFX
