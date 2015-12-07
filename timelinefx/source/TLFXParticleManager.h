@@ -250,6 +250,18 @@ namespace TLFX
          * Pauses the drawing and updating of all effects within the particle manager.
          */
         void TogglePause();
+		
+		/**
+		 * Pause the particle manager
+		 * Pauses the drawing and updating of all effects within the particle manager.
+		 */
+		void Pause();
+		
+		/**
+		 * Unpause the particle manager
+		 * Resumes the drawing and updating of all effects within the particle manager.
+		 */
+		void Play();
 
         /**
          * Interpolate between 2 values

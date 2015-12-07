@@ -447,6 +447,14 @@ namespace TLFX
     {
         _paused = !_paused;
     }
+	void ParticleManager::Pause()
+	{
+		_paused = true;
+	}
+	void ParticleManager::Play()
+	{
+		_paused = false;
+	}
 
     float ParticleManager::TweenValues( float oldValue, float value, float tween )
     {
