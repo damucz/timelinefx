@@ -190,6 +190,16 @@ namespace TLFX
          */
         int GetParticlesUnused() const;
 
+		/**
+		 * Get the current number of effects in all layers
+		 */
+		int GetEffectCount();
+		
+		/**
+		 * Get a string containing the names of effects in all layers
+		 */
+		std::string GetEffectNames();
+		
         /**
          * Adds a New effect To the particle manager, and pre loads a given number of frames
          * Use this method to add a new effect to the particle and start the effect running from whatever number of frames you pass to it.
