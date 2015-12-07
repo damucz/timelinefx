@@ -12,6 +12,7 @@ namespace TLFX
 {
 
     const int   ParticleManager::particleLimit = 5000;
+	float       ParticleManager::_globalAmountScale = 1.0f;
 
     ParticleManager::ParticleManager(int particles /*= particleLimit*/, int layers /*= 1*/)
         : _originX(0)
@@ -40,7 +41,7 @@ namespace TLFX
 
         , _angleTweened(0)
 
-        , _globalAmountScale(1.0f)
+        , _localAmountScale(1.0f)
 
         , _camtx(0)
         , _camty(0)
@@ -314,17 +315,27 @@ namespace TLFX
     float ParticleManager::GetOriginZ() const
     {
         return _originZ;
-    }
-
-    float ParticleManager::GetGlobalAmountScale() const
-    {
-        return _globalAmountScale;
-    }
-
-    void ParticleManager::SetGlobalAmountScale( float scale )
-    {
-        _globalAmountScale = scale;
-    }
+	}
+	
+	float ParticleManager::GetLocalAmountScale() const
+	{
+		return _localAmountScale;
+	}
+	
+	void ParticleManager::SetLocalAmountScale( float scale )
+	{
+		_localAmountScale = scale;
+	}
+	
+	float ParticleManager::GetGlobalAmountScale()
+	{
+		return _globalAmountScale;
+	}
+	
+	void ParticleManager::SetGlobalAmountScale( float scale )
+	{
+		_globalAmountScale = scale;
+	}
 
     int ParticleManager::GetParticlesInUse() const
     {
