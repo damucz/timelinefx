@@ -954,11 +954,6 @@ namespace TLFX
             _handleX = (int)(_currentWidth * 0.5f);
             _handleY = (int)(_currentHeight * 0.5f);
         }
-        else
-        {
-            _handleX = 0;
-            _handleY = 0;
-        }
 
         if (HasParticles() || _doesNotTimeout)
         {
