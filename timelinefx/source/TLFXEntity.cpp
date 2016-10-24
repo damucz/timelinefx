@@ -5,6 +5,8 @@
 
 #include <cmath>
 #include <cassert>
+#include <algorithm>
+
 
 namespace TLFX
 {
