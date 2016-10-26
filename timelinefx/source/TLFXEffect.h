@@ -779,6 +779,25 @@ namespace TLFX
          */
         void HardKill();
 
+
+        /**
+         * Capture world coordinates, entity angle and scale for tweening.
+         * Tweening is used in applications that use fixed rate timing. This is where the logic routines of an application are updated a fixed
+         * amount of times each frame, but the drawing routines are updated as many times as possible. Each time the entity is updated during a logic
+         * update you can capture its coordinates, then, depending on how much time has passed since the last logic update, the entity can be interpolated
+         * between the old coordinates and the new ones creating a nice smooth movement no matter the PC you're running it on. To simplify things you
+         * can use the tweener.mod to implement fixed rate timing. See the tweener.mod for more info.
+         */
+        void Capture();
+
+        void SetX(float x);
+        void SetY(float y);
+        void MakeSuper();
+        void AddGroupedEffect(Effect* e);
+        bool IsSuper() { return _isSuper; }
+        std::vector<Effect*>& GetEffects() { return _effects; }
+
+
         virtual void Destroy(bool releaseChildren = true);
 
         // Compilers
@@ -960,6 +979,9 @@ namespace TLFX
         bool                           _overrideGlobalZ;
 
         bool                           _bypassWeight;
+
+        bool                           _isSuper;			// Super effects are used to group other effects together. they don't container emitters.
+        std::vector<Effect*>           _effects;            // The list to contain the super effects list
     };
 
 } // namespace TLFX

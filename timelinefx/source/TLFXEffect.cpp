@@ -88,6 +88,8 @@ namespace TLFX
         , _bypassWeight(false)
 
         , _arrayOwner(true)
+
+        , _isSuper(false)
     {
         _inUse.resize(10);
 
@@ -213,6 +215,8 @@ namespace TLFX
         SetEllipseArc(o._ellipseArc);
         _dob = pm->GetCurrentTime();
         SetOKtoRender(false);
+
+        //@FRED
 
         _children.clear();
         for (auto it = o._children.begin(); it != o._children.end(); ++it)
@@ -1419,5 +1423,74 @@ namespace TLFX
     {
         return _currentEffectFrame;
     }
+
+    void Effect::Capture()
+    {
+        if(_isSuper)
+        {
+            for (auto it = _effects.begin(); it != _effects.end(); ++it)
+            {
+                Effect* e = static_cast<Effect*>(*it);
+                e->Capture();
+            }
+        }
+        else
+        {
+            _oldZ = _z;
+            _oldWX = _wx;
+            _oldWY = _wy;
+            _oldX = _x;
+            _oldY = _y;
+            _oldAngle = _angle;
+            _oldRelativeAngle = _relativeAngle;
+            _oldScaleX = _scaleX;
+            _oldScaleY = _scaleY;
+            _oldCurrentFrame = _currentFrame;
+        }
+    }
+
+    void Effect::SetX(float x)
+    {
+        if(_isSuper)
+        {
+            for (auto it = _effects.begin(); it != _effects.end(); ++it)
+            {
+                Effect* e = static_cast<Effect*>(*it);
+                e->SetX(x);
+            }
+        }
+        _x = x;
+    }
+
+    void Effect::SetY(float y)
+    {
+        if(_isSuper)
+        {
+            for (auto it = _effects.begin(); it != _effects.end(); ++it)
+            {
+                Effect* e = static_cast<Effect*>(*it);
+                e->SetY(y);
+            }
+        }
+        _y = y;
+    }
+
+    void Effect::MakeSuper()
+    {
+        _isSuper = true;
+        //_effects = CreateList();
+    }
+
+    void Effect::AddGroupedEffect(Effect* e)
+    {
+        if(!_isSuper)
+        {
+            assert(0); // Throw "This is not a super effect. Use MakeSuper first before adding effects."
+        }
+        _effects.push_back(e);
+        e->_parent = this;
+    }
+
+
 
 } // namespace TLFX
