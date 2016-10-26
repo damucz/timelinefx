@@ -1492,9 +1492,10 @@ namespace TLFX
                     _parentEffect->SetParticlesCreated(true);
 
                     // get the relative angle
-                    if (!_relative)
+                    if (!e->_relative)
                     {  // @todo dan Set(cosf(_angle  ??
-                        e->_matrix.Set(cosf(e->_angle / 180.0f * (float)M_PI), sinf(e->_angle / 180.0f * (float)M_PI), -sinf(e->_angle / 180.0f * (float)M_PI), cosf(e->_angle / 180.0f * (float)M_PI));
+                        float angle = _angle / 180.0f * (float)M_PI;
+                        e->_matrix.Set(cosf(angle), sinf(angle), -sinf(angle), cosf(angle));
                         e->_matrix = e->_matrix.Transform(_parent->GetMatrix());
                     }
                     e->_relativeAngle = _parent->GetRelativeAngle() + e->_angle;
