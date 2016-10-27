@@ -161,6 +161,12 @@ namespace TLFX
         static float GetLookupFrequencyOverTime();
 
         /**
+         * Add a new super effect to the library including any sub effects.
+         * Effects are stored using a map and can be retrieved using #GetEffect.
+         */
+        void AddSuperEffect(Effect *effect);
+
+        /**
          * Add a new effect to the library including any sub effects and emitters.
          * Effects are stored using a map and can be retrieved using #GetEffect.
          */

@@ -26,16 +26,6 @@ namespace TLFX
 
         _currentShape = _doc.child("EFFECTS").child("SHAPES").child("IMAGE");
 
-        _currentFolder = _doc.child("EFFECTS").child("FOLDER");
-        while (!_currentEffect && _currentFolder)
-        {
-            _currentEffect = _currentFolder.child("EFFECT");
-            if (!_currentEffect)                // empty folder
-                _currentFolder = _currentFolder.next_sibling("FOLDER");
-        }
-        if (!_currentEffect)            // no effect in any folder
-            _currentEffect = _doc.child("EFFECTS").child("EFFECT");
-
         return true;
     }
 
@@ -71,6 +61,32 @@ namespace TLFX
         return true;
     }
 
+    void PugiXMLLoader::LocateEffect()
+    {
+        _currentFolder = _doc.child("EFFECTS").child("FOLDER");
+        while (!_currentEffect && _currentFolder)
+        {
+            _currentEffect = _currentFolder.child("EFFECT");
+            if (!_currentEffect)                // empty folder
+                _currentFolder = _currentFolder.next_sibling("FOLDER");
+        }
+        if (!_currentEffect)            // no effect in any folder
+            _currentEffect = _doc.child("EFFECTS").child("EFFECT");
+    }
+
+    void PugiXMLLoader::LocateSuperEffect()
+    {
+        _currentFolder = _doc.child("EFFECTS").child("FOLDER");
+        while (!_currentEffect && _currentFolder)
+        {
+            _currentEffect = _currentFolder.child("SUPER_EFFECT");
+            if (!_currentEffect)                // empty folder
+                _currentFolder = _currentFolder.next_sibling("FOLDER");
+        }
+        if (!_currentEffect)            // no super effect in any folder
+            _currentEffect = _doc.child("EFFECTS").child("SUPER_EFFECT");
+    }
+
     Effect* PugiXMLLoader::GetNextEffect(const std::list<AnimImage*>& sprites)
     {
         if (!_currentEffect)
@@ -97,6 +113,78 @@ namespace TLFX
         }
 
         return effect;
+    }
+
+    Effect* PugiXMLLoader::GetNextSuperEffect(const std::list<AnimImage*>& sprites)
+    {
+        if (!_currentEffect)
+        {
+            snprintf(_error, sizeof(_error), "No more super effects there");
+            return NULL;
+        }
+
+        // load super effect
+        Effect *superEffect;
+        if (_currentFolder)
+            superEffect = LoadSuperEffect(_currentEffect, sprites, NULL, _currentFolder.attribute("NAME").as_string());
+        else
+            superEffect = LoadSuperEffect(_currentEffect, sprites);
+
+        // get next SUPER_EFFECT
+        _currentEffect = _currentEffect.next_sibling("SUPER_EFFECT");
+        if (!_currentEffect)
+        {
+            if (_currentFolder)
+            {
+                _currentFolder = _currentFolder.next_sibling("FOLDER");
+                _currentEffect = _currentFolder.child("SUPER_EFFECT");
+            }
+        }
+
+        return superEffect;
+    }
+
+    Effect* PugiXMLLoader::LoadSuperEffect( pugi::xml_node& node, const std::list<AnimImage*>& sprites, Emitter *parent, const char *folderPath /*= ""*/ )
+    {
+        Effect* superEffect = new Effect();
+
+        superEffect->MakeSuper();
+        superEffect->SetClass            (node.attribute("TYPE").as_int());
+        superEffect->SetEmitAtPoints     (node.attribute("EMITATPOINTS").as_bool());
+        superEffect->SetMGX              (node.attribute("MAXGX").as_int());
+        superEffect->SetMGY              (node.attribute("MAXGY").as_int());
+        superEffect->SetEmissionType     (node.attribute("EMISSION_TYPE").as_int());
+        superEffect->SetEllipseArc       (node.attribute("ELLIPSE_ARC").as_float());
+        superEffect->SetEffectLength     (node.attribute("EFFECT_LENGTH").as_int());
+        superEffect->SetLockAspect       (node.attribute("UNIFORM").as_bool());
+        superEffect->SetName             (node.attribute("NAME").as_string());
+        superEffect->SetHandleCenter     (node.attribute("HANDLE_CENTER").as_bool());
+        superEffect->SetHandleX          (node.attribute("HANDLE_X").as_int());
+        superEffect->SetHandleY          (node.attribute("HANDLE_Y").as_int());
+        superEffect->SetTraverseEdge     (node.attribute("TRAVERSE_EDGE").as_bool());
+        superEffect->SetEndBehavior      (node.attribute("END_BEHAVIOUR").as_int());
+        superEffect->SetDistanceSetByLife(node.attribute("DISTANCE_SET_BY_LIFE").as_bool());
+        superEffect->SetReverseSpawn     (node.attribute("REVERSE_SPAWN_DIRECTION").as_bool());
+        superEffect->SetParentEmitter(parent);
+
+        std::string path;
+        if (parent)
+            path = parent->GetPath();
+        else
+            path = folderPath;
+        if (!path.empty())
+            path += "/";
+        path += superEffect->GetName();
+        superEffect->SetPath(path.c_str());
+
+        for (pugi::xml_node subNodeEffect = node.child("EFFECT"); subNodeEffect; subNodeEffect = subNodeEffect.next_sibling("EFFECT"))
+        {
+            Effect* subEffect = LoadEffect(subNodeEffect, sprites, parent, folderPath);
+            subEffect->SetParent(superEffect);
+            superEffect->AddGroupedEffect(subEffect);
+        }
+
+        return superEffect;
     }
 
     Effect* PugiXMLLoader::LoadEffect( pugi::xml_node& node, const std::list<AnimImage*>& sprites, Emitter *parent, const char *folderPath /*= ""*/ )

@@ -21,6 +21,10 @@ namespace TLFX
         virtual bool        Open(const char *filename);
         virtual bool        GetNextShape(AnimImage *shape);
         virtual Effect*     GetNextEffect(const std::list<AnimImage*>& sprites);
+        virtual Effect*     GetNextSuperEffect(const std::list<AnimImage*>& sprites);
+
+        virtual void        LocateEffect();
+        virtual void        LocateSuperEffect();
 
         virtual const char* GetLastError() const;
 
@@ -32,6 +36,7 @@ namespace TLFX
         pugi::xml_node _currentFolder;
 
         Effect*    LoadEffect       (pugi::xml_node& node, const std::list<AnimImage*>& sprites, Emitter *parent = NULL, const char *folderPath = "");
+        Effect*    LoadSuperEffect  (pugi::xml_node& node, const std::list<AnimImage*>& sprites, Emitter *parent = NULL, const char *folderPath = "");
         void       LoadAttributeNode(pugi::xml_node& node, AttributeNode* attr);
         Emitter*   LoadEmitter      (pugi::xml_node& node, const std::list<AnimImage*>& sprites, Effect *parent);
         AnimImage* GetSpriteInList  (const std::list<AnimImage*>& sprites, int index) const;

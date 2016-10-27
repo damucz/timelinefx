@@ -218,15 +218,13 @@ namespace TLFX
         _dob = pm->GetCurrentTime();
         SetOKtoRender(false);
 
-        //@FRED
         if(_isSuper)
         {
-            MakeSuper();
-
+            _effects.clear();
             for (auto it = o._effects.begin(); it != o._effects.end(); ++it)
             {
-                Effect* newEffect = new Effect(*static_cast<Effect*>(*it), pm);
-                AddGroupedEffect(newEffect);
+                Effect* subEffect = new Effect(*static_cast<Effect*>(*it), pm);
+                AddGroupedEffect(subEffect);
             }
         }
         else
@@ -1492,7 +1490,7 @@ namespace TLFX
             for (auto it = _effects.begin(); it != _effects.end(); ++it)
             {
                 Effect* e = static_cast<Effect*>(*it);
-                e->SetX(x);
+                e->_x = x;
             }
         }
         _x = x;
@@ -1505,7 +1503,7 @@ namespace TLFX
             for (auto it = _effects.begin(); it != _effects.end(); ++it)
             {
                 Effect* e = static_cast<Effect*>(*it);
-                e->SetY(y);
+                e->_y = y;
             }
         }
         _y = y;
@@ -1519,12 +1517,10 @@ namespace TLFX
 
     void Effect::AddGroupedEffect(Effect* e)
     {
-        if(!_isSuper)
-        {
-            assert(0); // Throw "This is not a super effect. Use MakeSuper first before adding effects."
-        }
+        assert(_isSuper); // Throw "This is not a super effect. Use MakeSuper first before adding effects."
+
         _effects.push_back(e);
-        e->_parent = this;
+        //e->_parent = this;
     }
 
 
