@@ -795,6 +795,7 @@ namespace TLFX
         void MakeSuper();
         void AddGroupedEffect(Effect* e);
         bool IsSuper() { return _isSuper; }
+        void SetSuper(bool isSuper) { _isSuper = isSuper; }
         std::vector<Effect*>& GetEffects() { return _effects; }
 
 
