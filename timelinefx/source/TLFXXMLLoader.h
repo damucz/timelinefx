@@ -24,6 +24,9 @@ namespace TLFX
         virtual bool        Open(const char *filename) = 0;
         virtual bool        GetNextShape(AnimImage *shape) = 0;
         virtual Effect*     GetNextEffect(const std::list<AnimImage*>& sprites) = 0;
+        virtual Effect*     GetNextSuperEffect(const std::list<AnimImage*>& sprites) = 0;
+        virtual void        LocateEffect() = 0;
+        virtual void        LocateSuperEffect() = 0;
 
         virtual const char* GetLastError() const { return "no error reporting implemented"; }
 		

@@ -417,8 +417,21 @@ namespace TLFX
     {
         if (layer >= _effectLayers)
             layer = 0;
-        e->SetEffectLayer(layer);
-        _effects[layer].insert(e);
+        e->SetEffectLayer(layer);       
+
+        // if the effect is a super effect, then just add the effects in the list
+        if(e->IsSuper())
+        {
+            for (auto it = e->GetEffects().begin(); it != e->GetEffects().end(); ++it)
+            {
+                Effect* se = static_cast<Effect*>(*it);
+                AddEffect(se, layer);
+            }
+        }
+        else
+        {
+            _effects[layer].insert(e);
+        }
     }
 
     void ParticleManager::RemoveEffect( Effect* e )

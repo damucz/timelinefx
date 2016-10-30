@@ -88,6 +88,8 @@ namespace TLFX
         , _bypassWeight(false)
 
         , _arrayOwner(true)
+
+        , _isSuper(false)
     {
         _inUse.resize(10);
 
@@ -205,6 +207,8 @@ namespace TLFX
         , _cStretch(o._cStretch)
         , _cGlobalZ(o._cGlobalZ)
 
+        , _isSuper(o._isSuper)
+
         // copy automatically: base/entity
         // not copy: Directories, inUse
     {
@@ -214,12 +218,24 @@ namespace TLFX
         _dob = pm->GetCurrentTime();
         SetOKtoRender(false);
 
-        _children.clear();
-        for (auto it = o._children.begin(); it != o._children.end(); ++it)
+        if(_isSuper)
         {
-            Emitter *e = new Emitter(*static_cast<Emitter*>(*it), pm);
-            e->SetParentEffect(this);
-            e->SetParent(this);
+            _effects.clear();
+            for (auto it = o._effects.begin(); it != o._effects.end(); ++it)
+            {
+                Effect* subEffect = new Effect(*static_cast<Effect*>(*it), pm);
+                AddGroupedEffect(subEffect);
+            }
+        }
+        else
+        {
+            _children.clear();
+            for (auto it = o._children.begin(); it != o._children.end(); ++it)
+            {
+                Emitter *e = new Emitter(*static_cast<Emitter*>(*it), pm);
+                e->SetParentEffect(this);
+                e->SetParent(this);
+            }
         }
 
         if (copyDirectory)
@@ -1076,38 +1092,60 @@ namespace TLFX
 
     void Effect::CompileAll()
     {
-        CompileLife();
-        CompileAmount();
-        CompileSizeX();
-        CompileSizeY();
-        CompileVelocity();
-        CompileWeight();
-        CompileSpin();
-        CompileAlpha();
-        CompileEmissionAngle();
-        CompileEmissionRange();
-        CompileWidth();
-        CompileHeight();
-        CompileAngle();
-        CompileStretch();
-        CompileGlobalZ();
-
-        // Emitter
-        for (auto it = _children.begin(); it != _children.end(); ++it)
+        if(_isSuper)
         {
-            Emitter* e = static_cast<Emitter*>(*it);
-            e->CompileAll();
+            for (auto it = _effects.begin(); it != _effects.end(); ++it)
+            {
+                Effect* eff = static_cast<Effect*>(*it);
+                eff->CompileAll();
+            }
+        }
+        else
+        {
+            CompileLife();
+            CompileAmount();
+            CompileSizeX();
+            CompileSizeY();
+            CompileVelocity();
+            CompileWeight();
+            CompileSpin();
+            CompileAlpha();
+            CompileEmissionAngle();
+            CompileEmissionRange();
+            CompileWidth();
+            CompileHeight();
+            CompileAngle();
+            CompileStretch();
+            CompileGlobalZ();
+
+            // Emitter
+            for (auto it = _children.begin(); it != _children.end(); ++it)
+            {
+                Emitter* e = static_cast<Emitter*>(*it);
+                e->CompileAll();
+            }
         }
     }
 
     void Effect::CompileQuick()
     {
-        // Emitter
-        for (auto it = _children.begin(); it != _children.end(); ++it)
+        if(_isSuper)
         {
-            Emitter* e = static_cast<Emitter*>(*it);
-            e->CompileQuick();
-            e->ResetBypassers();
+            for (auto it = _effects.begin(); it != _effects.end(); ++it)
+            {
+                Effect* eff = static_cast<Effect*>(*it);
+                eff->CompileQuick();
+            }
+        }
+        else
+        {
+            // Emitter
+            for (auto it = _children.begin(); it != _children.end(); ++it)
+            {
+                Emitter* e = static_cast<Emitter*>(*it);
+                e->CompileQuick();
+                e->ResetBypassers();
+            }
         }
     }
 
@@ -1419,5 +1457,72 @@ namespace TLFX
     {
         return _currentEffectFrame;
     }
+
+    void Effect::Capture()
+    {
+        if(_isSuper)
+        {
+            for (auto it = _effects.begin(); it != _effects.end(); ++it)
+            {
+                Effect* e = static_cast<Effect*>(*it);
+                e->Capture();
+            }
+        }
+        else
+        {
+            _oldZ = _z;
+            _oldWX = _wx;
+            _oldWY = _wy;
+            _oldX = _x;
+            _oldY = _y;
+            _oldAngle = _angle;
+            _oldRelativeAngle = _relativeAngle;
+            _oldScaleX = _scaleX;
+            _oldScaleY = _scaleY;
+            _oldCurrentFrame = _currentFrame;
+        }
+    }
+
+    void Effect::SetX(float x)
+    {
+        if(_isSuper)
+        {
+            for (auto it = _effects.begin(); it != _effects.end(); ++it)
+            {
+                Effect* e = static_cast<Effect*>(*it);
+                e->_x = x;
+            }
+        }
+        _x = x;
+    }
+
+    void Effect::SetY(float y)
+    {
+        if(_isSuper)
+        {
+            for (auto it = _effects.begin(); it != _effects.end(); ++it)
+            {
+                Effect* e = static_cast<Effect*>(*it);
+                e->_y = y;
+            }
+        }
+        _y = y;
+    }
+
+    void Effect::MakeSuper()
+    {
+        _isSuper = true;
+        //_effects = CreateList();
+    }
+
+    void Effect::AddGroupedEffect(Effect* e)
+    {
+        assert(_isSuper); // Throw "This is not a super effect. Use MakeSuper first before adding effects."
+
+        _effects.push_back(e);
+        //e->_parent = this;
+    }
+
+
 
 } // namespace TLFX
