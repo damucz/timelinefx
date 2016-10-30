@@ -536,10 +536,6 @@ namespace TLFX
             LoadAttributeNode(attrnode, attr);
         }
 
-        sub = node.child("EFFECT");
-        if (sub)
-            e->AddEffect(LoadEffect(node, sprites, e));
-
         for (attrnode = node.child("EFFECT"); attrnode; attrnode = attrnode.next_sibling("EFFECT"))
         {
             e->AddEffect(LoadEffect(attrnode, sprites, e));
